@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دعوة زفاف فارس ووعد</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <!-- مكتبة القصاصات المتطايرة الأصلية من موقع Vercel -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * {
@@ -19,7 +18,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #ffb3c1;
             background: linear-gradient(135deg, #ffe5ec 0%, #ffb3c1 100%);
             font-family: 'Cairo', sans-serif;
             overflow: hidden;
@@ -35,7 +33,6 @@
             align-items: center;
         }
 
-        /* الظرف الخارجي المقفل بالكامل */
         .envelope-wrapper {
             position: relative;
             width: 320px;
@@ -48,7 +45,6 @@
             transition: transform 0.5s ease;
         }
 
-        /* غطاء الظرف العلوي */
         .envelope-flap {
             position: absolute;
             top: 0;
@@ -63,7 +59,6 @@
             z-index: 12;
         }
 
-        /* جيب الظرف الأمامي المتداخل */
         .envelope-front {
             position: absolute;
             bottom: 0;
@@ -78,7 +73,6 @@
             z-index: 11;
         }
 
-        /* الختم المفسفوري النطاط */
         .seal-btn {
             position: absolute;
             top: 95px;
@@ -103,7 +97,6 @@
             50% { transform: translateX(-50%) scale(1.1); }
         }
 
-        /* كارت الدعوة المستخبي ورا الظرف تماماً */
         .card {
             position: absolute;
             width: 300px;
@@ -125,7 +118,6 @@
             pointer-events: none;
         }
 
-        /* حالة الفتح والأنيميشن الحقيقي لـ Vercel */
         .container.is-open .envelope-flap {
             transform: rotateX(180deg);
             z-index: 4;
@@ -148,7 +140,6 @@
             pointer-events: none;
         }
 
-        /* نصوص واستايل الكارت الداخلي */
         .glow-text { color: #ccff00; font-weight: 700; font-size: 14px; }
         .hosts-title { font-size: 14px; font-weight: 600; line-height: 1.6; }
         .main-invitation { font-size: 12px; opacity: 0.9; }
@@ -165,7 +156,6 @@
             font-size: 14px;
         }
 
-        /* العداد التنازلي التفاعلي المباشر بالثواني */
         .countdown-grid {
             display: flex;
             justify-content: space-between;
@@ -184,7 +174,6 @@
 <body>
 
     <div class="container" id="boxContainer">
-        <!-- الكارت مخفي تماماً بالخلف ولن يظهر إلا عند الضغط -->
         <div class="card">
             <div class="glow-text">🎈 شرفونا ونورونا لتكتمل فرحتنا 🎈</div>
             
@@ -200,7 +189,6 @@
             <div class="date-badge">التاريخ: 07 / 07 / 2026 م</div>
             <div class="glow-text" style="font-size: 14px;">📍 المكان: قاعة الأفراح - المنصورة</div>
             
-            <!-- العداد المحدث بالثانية الحية من Vercel -->
             <div class="countdown-grid" id="timerGrid">
                 <div class="countdown-item"><span id="days">00</span>يوم</div>
                 <div class="countdown-item"><span id="hours">00</span>ساعة</div>
@@ -209,7 +197,6 @@
             </div>
         </div>
 
-        <!-- هيكل الظرف المحكم بالكامل -->
         <div class="envelope-wrapper" onclick="openWeddingEnvelope()">
             <div class="envelope-flap"></div>
             <div class="envelope-front"></div>
@@ -218,11 +205,8 @@
     </div>
 
     <script>
-        // دالة الفتح وإطلاق القصاصات الملونة (Confetti) المنسوخة من Vercel
         function openWeddingEnvelope() {
             document.getElementById('boxContainer').classList.add('is-open');
-            
-            // تشغيل تأثير ضرب الورق الملون فوراً عند الفتح
             confetti({
                 particleCount: 150,
                 spread: 80,
@@ -230,7 +214,6 @@
             });
         }
 
-        // دالة العداد التنازلي الحي بالثواني لـ تاريخ 7/7/2026
         function liveTimer() {
             const weddingDate = new Date('July 7, 2026 00:00:00').getTime();
             const now = new Date().getTime();
@@ -252,224 +235,8 @@
             document.getElementById('seconds').innerText = String(s).padStart(2, '0');
         }
 
-        // تشغيل العداد وتحديثه كل ثانية واحدة بالظبط
         liveTimer();
         setInterval(liveTimer, 1000);
-    </script>
-</body>
-</html>
-        }
-
-        /* الظرف الخارجي */
-        .envelope-wrapper {
-            position: relative;
-            width: 360px;
-            height: 240px;
-            background-color: var(--primary-color);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            border-radius: 0 0 10px 10px;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        /* الغطاء العلوي للظرف */
-        .envelope-wrapper::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 180px solid transparent;
-            border-right: 180px solid transparent;
-            border-top: 140px solid var(--dark-red);
-            transform-origin: top;
-            transition: transform 0.4s ease-in-out, z-index 0.2s ease-in-out;
-            z-index: 4;
-        }
-
-        /* جيب الظرف السفلي التقاطع */
-        .envelope-wrapper::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 180px solid #ff1a4a;
-            border-right: 180px solid #ff1a4a;
-            border-bottom: 120px solid #e6002e;
-            border-top: 120px solid transparent;
-            border-radius: 0 0 10px 10px;
-            z-index: 3;
-        }
-
-        /* كارت الدعوة الداخلي المنسوخ من Vercel */
-        .wedding-card {
-            position: absolute;
-            bottom: 60px;
-            width: 340px;
-            height: 500px;
-            background-color: var(--primary-color);
-            border: 4px solid #ffffff;
-            border-radius: 15px;
-            padding: 30px 20px;
-            box-sizing: border-box;
-            text-align: center;
-            color: #ffffff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            transform: translateY(180px) scale(0.85);
-            opacity: 0;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            pointer-events: none;
-        }
-
-        /* تأثيرات الحركة عند النقر وفتح الظرف */
-        .wrapper.open .envelope-wrapper::before {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
-
-        .wrapper.open .wedding-card {
-            transform: translateY(-80px) scale(1);
-            opacity: 1;
-            z-index: 5;
-            pointer-events: auto;
-        }
-
-        /* زر الفتح الدائري (الختم) */
-        .heart-seal {
-            position: absolute;
-            top: 105px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 60px;
-            background-color: var(--secondary-color);
-            border-radius: 50%;
-            z-index: 5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #000000;
-            font-size: 22px;
-            box-shadow: 0 0 15px var(--secondary-color), 0 4px 10px rgba(0,0,0,0.4);
-            animation: pulseBtn 1.5s infinite;
-        }
-
-        @keyframes pulseBtn {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.1); }
-        }
-
-        .wrapper.open .heart-seal {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* نصوص الكارت والتنسيقات */
-        .header-glow { color: var(--secondary-color); font-weight: 700; font-size: 15px; }
-        .family-hosts { font-size: 15px; font-weight: 600; line-height: 1.7; margin: 10px 0; }
-        .invitation-text { font-size: 13px; opacity: 0.95; }
-        .couple-names { font-size: 34px; font-weight: 900; color: #ffffff; text-shadow: 2px 3px 0px #99001a; margin: 5px 0; }
-        
-        .date-badge {
-            background-color: #ffffff;
-            color: var(--primary-color);
-            font-weight: 900;
-            padding: 8px 20px;
-            border-radius: 25px;
-            display: inline-block;
-            margin: 10px auto;
-            font-size: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .location-text { color: var(--secondary-color); font-weight: 700; font-size: 15px; margin-top: 5px; }
-
-        /* العداد التنازلي المطابق تماماً لموقع Vercel بدون صور */
-        .countdown-container {
-            display: flex;
-            justify-content: space-around;
-            background-color: var(--secondary-color);
-            color: #000000;
-            border-radius: 12px;
-            padding: 10px 5px;
-            font-weight: 700;
-            margin-top: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        .countdown-box { text-align: center; font-size: 12px; flex: 1; }
-        .countdown-box span { font-size: 24px; font-weight: 900; display: block; font-family: sans-serif; line-height: 1.2; }
-    </style>
-</head>
-<body>
-
-    <div class="wrapper" id="mainWrapper">
-        <!-- الكارت الداخلي بالبيانات المحدثة وقسم الصور محذوف تماماً -->
-        <div class="wedding-card">
-            <div class="header-glow">🎈 شرفونا ونورونا لتكتمل فرحتنا 🎈</div>
-            
-            <div class="family-hosts">
-                يسر الأستاذ / يسري فارس أبو الخير <br>
-                و الأستاذ / محمد يسري أبو الخير
-            </div>
-            
-            <div class="invitation-text">دعوتكم لحضور حفل زفاف</div>
-            <div class="couple-names">فارس & وعد</div>
-            <div style="font-size: 22px; color: var(--secondary-color);">✨ ⭐ ✨</div>
-            
-            <div class="date-badge">التاريخ: 07 / 07 / 2026 م</div>
-            <div class="location-text">📍 المكان: قاعة الأفراح - المنصورة</div>
-            
-            <!-- العداد التنازلي التلقائي -->
-            <div class="countdown-container" id="countdown">
-                <div class="countdown-box"><span id="daysBox">00</span>يوم</div>
-                <div class="countdown-box"><span id="hoursBox">00</span>ساعة</div>
-                <div class="countdown-box"><span id="minsBox">00</span>دقيقة</div>
-            </div>
-        </div>
-
-        <!-- الظرف المقفل المحكم -->
-        <div class="envelope-wrapper" onclick="toggleEnvelope()">
-            <div class="heart-seal">✉</div>
-        </div>
-    </div>
-
-    <script>
-        // دالة الفتح عند الضغط على زر الختم
-        function toggleEnvelope() {
-            document.getElementById('mainWrapper').classList.add('open');
-        }
-
-        // دالة حساب الوقت المتبقي تنازلياً حتى تاريخ الفرح
-        function startCountdown() {
-            const weddingDate = new Date('July 7, 2026 00:00:00').getTime();
-            const now = new Date().getTime();
-            const timeDifference = weddingDate - now;
-
-            if (timeDifference < 0) {
-                document.getElementById('countdown').innerHTML = "<div style='width:100%; font-weight:900; font-size:16px;'>فرحتنا بدأت الآن! 🎉</div>";
-                return;
-            }
-
-            const d = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-            const h = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-
-            document.getElementById('daysBox').innerText = String(d).padStart(2, '0');
-            document.getElementById('hoursBox').innerText = String(h).padStart(2, '0');
-            document.getElementById('minsBox').innerText = String(m).padStart(2, '0');
-        }
-
-        // تحديث العداد دورياً
-        startCountdown();
-        setInterval(startCountdown, 60000);
     </script>
 </body>
 </html>
