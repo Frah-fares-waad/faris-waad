@@ -1,242 +1,381 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دعوة زفاف فارس ووعد</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>دعوة خطوبة فارس ووعد</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script><style>
 
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #ffe5ec 0%, #ffb3c1 100%);
-            font-family: 'Cairo', sans-serif;
-            overflow: hidden;
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-        .container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+body{
+font-family:'Cairo',sans-serif;
+height:100vh;
+overflow:hidden;
+background:
+linear-gradient(135deg,#8b001f,#ff0033);
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+}
 
-        .envelope-wrapper {
-            position: relative;
-            width: 320px;
-            height: 220px;
-            background-color: #ff0033;
-            border-radius: 0 0 12px 12px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            cursor: pointer;
-            z-index: 10;
-            transition: transform 0.5s ease;
-        }
+/* الخلفية الذهبية */
 
-        .envelope-flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 160px solid transparent;
-            border-right: 160px solid transparent;
-            border-top: 130px solid #d6002a;
-            transform-origin: top;
-            transition: transform 0.5s ease-in-out;
-            z-index: 12;
-        }
+.gold-particles{
+position:absolute;
+width:100%;
+height:100%;
+overflow:hidden;
+}
 
-        .envelope-front {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 160px solid #ff1a4a;
-            border-right: 160px solid #ff1a4a;
-            border-bottom: 110px solid #e6002e;
-            border-top: 110px solid transparent;
-            border-radius: 0 0 12px 12px;
-            z-index: 11;
-        }
+.gold-particles span{
+position:absolute;
+display:block;
+width:4px;
+height:4px;
+background:#ccff00;
+border-radius:50%;
+animation:float 10s linear infinite;
+opacity:.7;
+}
 
-        .seal-btn {
-            position: absolute;
-            top: 95px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 55px;
-            height: 55px;
-            background-color: #ccff00;
-            border-radius: 50%;
-            z-index: 13;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 22px;
-            box-shadow: 0 0 15px #ccff00, 0 4px 10px rgba(0,0,0,0.3);
-            animation: bounceBtn 1.2s infinite;
-            transition: opacity 0.3s ease;
-        }
+@keyframes float{
+0%{
+transform:translateY(100vh) scale(0);
+}
+100%{
+transform:translateY(-100px) scale(1);
+}
+}
 
-        @keyframes bounceBtn {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.1); }
-        }
+.container{
+position:relative;
+width:100%;
+max-width:420px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
 
-        .card {
-            position: absolute;
-            width: 300px;
-            height: 460px;
-            background-color: #ff0033;
-            border: 4px solid #ffffff;
-            border-radius: 16px;
-            padding: 20px 15px;
-            text-align: center;
-            color: #ffffff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-            z-index: 5;
-            transform: translateY(100px) scale(0.85);
-            opacity: 0;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            pointer-events: none;
-        }
+.envelope-wrapper{
+position:relative;
+width:330px;
+height:220px;
+background:#c4002a;
+cursor:pointer;
+border-radius:0 0 14px 14px;
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+transition:.6s;
+}
 
-        .container.is-open .envelope-flap {
-            transform: rotateX(180deg);
-            z-index: 4;
-        }
+.envelope-flap{
+position:absolute;
+top:0;
+left:0;
+width:0;
+height:0;
+border-left:165px solid transparent;
+border-right:165px solid transparent;
+border-top:130px solid #9f0021;
+transform-origin:top;
+transition:.7s;
+z-index:5;
+}
 
-        .container.is-open .seal-btn {
-            opacity: 0;
-            pointer-events: none;
-        }
+.envelope-front{
+position:absolute;
+bottom:0;
+width:0;
+height:0;
+border-left:165px solid #ff1848;
+border-right:165px solid #ff1848;
+border-bottom:110px solid #d7002d;
+border-top:110px solid transparent;
+}
 
-        .container.is-open .card {
-            transform: translateY(-110px) scale(1);
-            opacity: 1;
-            z-index: 20;
-            pointer-events: auto;
-        }
+.seal-btn{
+position:absolute;
+top:92px;
+left:50%;
+transform:translateX(-50%);
+width:60px;
+height:60px;
+border-radius:50%;
+background:#ccff00;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:25px;
+z-index:10;
+animation:pulse 1.4s infinite;
+}
 
-        .container.is-open .envelope-wrapper {
-            transform: translateY(120px);
-            pointer-events: none;
-        }
+@keyframes pulse{
+50%{
+transform:translateX(-50%) scale(1.1);
+}
+}
 
-        .glow-text { color: #ccff00; font-weight: 700; font-size: 14px; }
-        .hosts-title { font-size: 14px; font-weight: 600; line-height: 1.6; }
-        .main-invitation { font-size: 12px; opacity: 0.9; }
-        .names-glow { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 2px 3px 0px #99001a; }
-        
-        .date-badge {
-            background-color: #ffffff;
-            color: #ff0033;
-            font-weight: 900;
-            padding: 6px 18px;
-            border-radius: 20px;
-            display: inline-block;
-            margin: 5px auto;
-            font-size: 14px;
-        }
+.card{
+position:absolute;
+width:320px;
+height:560px;
+background:
+linear-gradient(180deg,#b10026,#ff0033);
+border:4px solid #ccff00;
+border-radius:22px;
+padding:20px;
+text-align:center;
+color:white;
+box-shadow:0 20px 60px rgba(0,0,0,.4);
 
-        .countdown-grid {
-            display: flex;
-            justify-content: space-between;
-            background-color: #ccff00;
-            color: #000000;
-            border-radius: 10px;
-            padding: 8px 4px;
-            font-weight: 700;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
+transform:translateY(100px) scale(.8);
+opacity:0;
+transition:.8s;
 
-        .countdown-item { text-align: center; font-size: 11px; flex: 1; }
-        .countdown-item span { font-size: 20px; font-weight: 900; display: block; font-family: sans-serif; line-height: 1.1; }
-    </style>
-</head>
-<body>
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
 
-    <div class="container" id="boxContainer">
-        <div class="card">
-            <div class="glow-text">🎈 شرفونا ونورونا لتكتمل فرحتنا 🎈</div>
-            
-            <div class="hosts-title">
-                يسر الأستاذ / يسري فارس أبو الخير <br>
-                و الأستاذ / محمد يسري أبو الخير
-            </div>
-            
-            <div class="main-invitation">دعوتكم لحضور حفل زفاف</div>
-            <div class="names-glow">فارس & وعد</div>
-            <div style="font-size: 20px; color: #ccff00;">✨ ⭐ ✨</div>
-            
-            <div class="date-badge">التاريخ: 07 / 07 / 2026 م</div>
-            <div class="glow-text" style="font-size: 14px;">📍 المكان: قاعة الأفراح - المنصورة</div>
-            
-            <div class="countdown-grid" id="timerGrid">
-                <div class="countdown-item"><span id="days">00</span>يوم</div>
-                <div class="countdown-item"><span id="hours">00</span>ساعة</div>
-                <div class="countdown-item"><span id="minutes">00</span>دقيقة</div>
-                <div class="countdown-item" style="color: #ff0033;"><span id="seconds">00</span>ثانية</div>
-            </div>
-        </div>
+.container.open .envelope-flap{
+transform:rotateX(180deg);
+}
 
-        <div class="envelope-wrapper" onclick="openWeddingEnvelope()">
-            <div class="envelope-flap"></div>
-            <div class="envelope-front"></div>
-            <div class="seal-btn">✉</div>
-        </div>
-    </div>
+.container.open .card{
+opacity:1;
+transform:translateY(-190px) scale(1);
+}
 
-    <script>
-        function openWeddingEnvelope() {
-            document.getElementById('boxContainer').classList.add('is-open');
-            confetti({
-                particleCount: 150,
-                spread: 80,
-                origin: { y: 0.6 }
-            });
-        }
+.container.open .envelope-wrapper{
+transform:translateY(130px);
+}
 
-        function liveTimer() {
-            const weddingDate = new Date('July 7, 2026 00:00:00').getTime();
-            const now = new Date().getTime();
-            const diff = weddingDate - now;
+.guest{
+color:#ccff00;
+font-weight:700;
+font-size:15px;
+}
 
-            if (diff < 0) {
-                document.getElementById('timerGrid').innerHTML = "<div style='width:100%; font-weight:900; font-size:14px; text-align:center;'>فرحتنا بدأت الآن! 🎉</div>";
-                return;
-            }
+.title{
+font-size:14px;
+color:#ccff00;
+}
 
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
+.names{
+font-size:38px;
+font-weight:900;
+text-shadow:3px 3px #850018;
+}
 
-            document.getElementById('days').innerText = String(d).padStart(2, '0');
-            document.getElementById('hours').innerText = String(h).padStart(2, '0');
-            document.getElementById('minutes').innerText = String(m).padStart(2, '0');
-            document.getElementById('seconds').innerText = String(s).padStart(2, '0');
-        }
+.badge{
+background:white;
+color:#ff0033;
+padding:8px 18px;
+border-radius:20px;
+font-weight:900;
+display:inline-block;
+}
 
-        liveTimer();
-        setInterval(liveTimer, 1000);
-    </script>
-</body>
+.countdown{
+background:#ccff00;
+color:black;
+border-radius:12px;
+padding:10px;
+display:flex;
+justify-content:space-between;
+}
+
+.countdown div{
+flex:1;
+font-size:12px;
+}
+
+.countdown span{
+display:block;
+font-size:22px;
+font-weight:900;
+}
+
+.btn{
+display:inline-block;
+margin-top:8px;
+padding:10px 15px;
+border-radius:25px;
+background:white;
+color:#ff0033;
+font-weight:800;
+text-decoration:none;
+}
+
+.music-btn{
+position:fixed;
+top:20px;
+left:20px;
+background:#ccff00;
+color:black;
+border:none;
+padding:10px 15px;
+border-radius:30px;
+font-weight:800;
+cursor:pointer;
+z-index:999;
+}
+
+</style></head><body><button class="music-btn" onclick="toggleMusic()">
+🎵 تشغيل الموسيقى
+</button><audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8a13c0e95.mp3" type="audio/mpeg">
+</audio><div class="gold-particles" id="particles"></div><div class="container" id="container"><div class="card"><div id="guestName" class="guest"></div><div class="title">
+✨ نتشرف بحضوركم ومشاركتنا فرحتنا ✨
+</div><div>
+يسر الأستاذ / يسري فارس أبو الخير<br>
+والأستاذ / محمد يسري أبو الخير
+</div><div>
+يدعونكم لحضور حفل خطوبة
+</div><div class="names">
+فارس & وعد
+</div><div>
+💍 ننتظر حضوركم لمشاركتنا أجمل لحظات العمر
+</div><div class="badge">
+07 / 07 / 2026
+</div><div>
+📍 قاعة كابتال - طلخا - المنصورة
+</div><a
+class="btn"
+target="_blank"
+href="https://maps.google.com/?q=393V+X8V+طلخا+الدقهلية">
+📍 موقع القاعة
+</a>
+
+<a
+class="btn"
+target="_blank"
+href="https://calendar.google.com">
+📅 حفظ الموعد
+</a>
+
+<div class="countdown" id="timer"><div>
+<span id="days">00</span>
+يوم
+</div><div>
+<span id="hours">00</span>
+ساعة
+</div><div>
+<span id="minutes">00</span>
+دقيقة
+</div><div>
+<span id="seconds">00</span>
+ثانية
+</div></div></div><div class="envelope-wrapper" onclick="openInvite()">
+<div class="envelope-flap"></div>
+<div class="envelope-front"></div>
+<div class="seal-btn">💌</div>
+</div></div><script>
+
+for(let i=0;i<60;i++){
+
+let star=document.createElement("span");
+
+star.style.left=Math.random()*100+"%";
+star.style.animationDuration=(5+Math.random()*8)+"s";
+star.style.opacity=Math.random();
+
+document.getElementById("particles").appendChild(star);
+}
+
+function openInvite(){
+
+document.getElementById("container")
+.classList.add("open");
+
+confetti({
+particleCount:250,
+spread:120,
+origin:{y:.6}
+});
+}
+
+function countdown(){
+
+let target=
+new Date("July 7, 2026 00:00:00").getTime();
+
+let now=new Date().getTime();
+
+let diff=target-now;
+
+if(diff<0){
+document.getElementById("timer").innerHTML=
+"🎉 بدأت فرحتنا 🎉";
+return;
+}
+
+let d=Math.floor(diff/(1000*60*60*24));
+
+let h=Math.floor(
+(diff%(1000*60*60*24))
+/
+(1000*60*60)
+);
+
+let m=Math.floor(
+(diff%(1000*60*60))
+/
+(1000*60)
+);
+
+let s=Math.floor(
+(diff%(1000*60))
+/
+1000
+);
+
+days.innerText=d;
+hours.innerText=h;
+minutes.innerText=m;
+seconds.innerText=s;
+}
+
+countdown();
+setInterval(countdown,1000);
+
+function toggleMusic(){
+
+let music=document.getElementById("music");
+
+if(music.paused){
+
+music.play();
+
+document.querySelector(".music-btn")
+.innerHTML="🔇 إيقاف الموسيقى";
+
+}else{
+
+music.pause();
+
+document.querySelector(".music-btn")
+.innerHTML="🎵 تشغيل الموسيقى";
+
+}
+}
+
+const params=
+new URLSearchParams(window.location.search);
+
+const guest=
+params.get("guest");
+
+if(guest){
+
+document.getElementById("guestName")
+.innerHTML=
+"أهلاً وسهلاً بالأستاذ " + guest + " 🌹";
+
+}
+
+</script></body>
 </html>
