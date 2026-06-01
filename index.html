@@ -5,35 +5,259 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دعوة زفاف فارس ووعد</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- مكتبة القصاصات المتطايرة الأصلية من موقع Vercel -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root {
-            --primary-color: #ff0033;
-            --secondary-color: #ccff00;
-            --dark-red: #d6002a;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, #ffeaee 0%, #ffb3c1 100%);
+            background: #ffb3c1;
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffb3c1 100%);
             font-family: 'Cairo', sans-serif;
             overflow: hidden;
         }
 
-        .wrapper {
+        .container {
             position: relative;
             width: 100%;
-            max-width: 390px;
-            height: 600px;
+            max-width: 400px;
+            height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-end;
-            padding-bottom: 50px;
-            box-sizing: border-box;
+            align-items: center;
+        }
+
+        /* الظرف الخارجي المقفل بالكامل */
+        .envelope-wrapper {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background-color: #ff0033;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.5s ease;
+        }
+
+        /* غطاء الظرف العلوي */
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 130px solid #d6002a;
+            transform-origin: top;
+            transition: transform 0.5s ease-in-out;
+            z-index: 12;
+        }
+
+        /* جيب الظرف الأمامي المتداخل */
+        .envelope-front {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid #ff1a4a;
+            border-right: 160px solid #ff1a4a;
+            border-bottom: 110px solid #e6002e;
+            border-top: 110px solid transparent;
+            border-radius: 0 0 12px 12px;
+            z-index: 11;
+        }
+
+        /* الختم المفسفوري النطاط */
+        .seal-btn {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55px;
+            height: 55px;
+            background-color: #ccff00;
+            border-radius: 50%;
+            z-index: 13;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            box-shadow: 0 0 15px #ccff00, 0 4px 10px rgba(0,0,0,0.3);
+            animation: bounceBtn 1.2s infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes bounceBtn {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        /* كارت الدعوة المستخبي ورا الظرف تماماً */
+        .card {
+            position: absolute;
+            width: 300px;
+            height: 460px;
+            background-color: #ff0033;
+            border: 4px solid #ffffff;
+            border-radius: 16px;
+            padding: 20px 15px;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            z-index: 5;
+            transform: translateY(100px) scale(0.85);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        /* حالة الفتح والأنيميشن الحقيقي لـ Vercel */
+        .container.is-open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 4;
+        }
+
+        .container.is-open .seal-btn {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .container.is-open .card {
+            transform: translateY(-110px) scale(1);
+            opacity: 1;
+            z-index: 20;
+            pointer-events: auto;
+        }
+
+        .container.is-open .envelope-wrapper {
+            transform: translateY(120px);
+            pointer-events: none;
+        }
+
+        /* نصوص واستايل الكارت الداخلي */
+        .glow-text { color: #ccff00; font-weight: 700; font-size: 14px; }
+        .hosts-title { font-size: 14px; font-weight: 600; line-height: 1.6; }
+        .main-invitation { font-size: 12px; opacity: 0.9; }
+        .names-glow { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 2px 3px 0px #99001a; }
+        
+        .date-badge {
+            background-color: #ffffff;
+            color: #ff0033;
+            font-weight: 900;
+            padding: 6px 18px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px auto;
+            font-size: 14px;
+        }
+
+        /* العداد التنازلي التفاعلي المباشر بالثواني */
+        .countdown-grid {
+            display: flex;
+            justify-content: space-between;
+            background-color: #ccff00;
+            color: #000000;
+            border-radius: 10px;
+            padding: 8px 4px;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .countdown-item { text-align: center; font-size: 11px; flex: 1; }
+        .countdown-item span { font-size: 20px; font-weight: 900; display: block; font-family: sans-serif; line-height: 1.1; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="boxContainer">
+        <!-- الكارت مخفي تماماً بالخلف ولن يظهر إلا عند الضغط -->
+        <div class="card">
+            <div class="glow-text">🎈 شرفونا ونورونا لتكتمل فرحتنا 🎈</div>
+            
+            <div class="hosts-title">
+                يسر الأستاذ / يسري فارس أبو الخير <br>
+                و الأستاذ / محمد يسري أبو الخير
+            </div>
+            
+            <div class="main-invitation">دعوتكم لحضور حفل زفاف</div>
+            <div class="names-glow">فارس & وعد</div>
+            <div style="font-size: 20px; color: #ccff00;">✨ ⭐ ✨</div>
+            
+            <div class="date-badge">التاريخ: 07 / 07 / 2026 م</div>
+            <div class="glow-text" style="font-size: 14px;">📍 المكان: قاعة الأفراح - المنصورة</div>
+            
+            <!-- العداد المحدث بالثانية الحية من Vercel -->
+            <div class="countdown-grid" id="timerGrid">
+                <div class="countdown-item"><span id="days">00</span>يوم</div>
+                <div class="countdown-item"><span id="hours">00</span>ساعة</div>
+                <div class="countdown-item"><span id="minutes">00</span>دقيقة</div>
+                <div class="countdown-item" style="color: #ff0033;"><span id="seconds">00</span>ثانية</div>
+            </div>
+        </div>
+
+        <!-- هيكل الظرف المحكم بالكامل -->
+        <div class="envelope-wrapper" onclick="openWeddingEnvelope()">
+            <div class="envelope-flap"></div>
+            <div class="envelope-front"></div>
+            <div class="seal-btn">✉</div>
+        </div>
+    </div>
+
+    <script>
+        // دالة الفتح وإطلاق القصاصات الملونة (Confetti) المنسوخة من Vercel
+        function openWeddingEnvelope() {
+            document.getElementById('boxContainer').classList.add('is-open');
+            
+            // تشغيل تأثير ضرب الورق الملون فوراً عند الفتح
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // دالة العداد التنازلي الحي بالثواني لـ تاريخ 7/7/2026
+        function liveTimer() {
+            const weddingDate = new Date('July 7, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+
+            if (diff < 0) {
+                document.getElementById('timerGrid').innerHTML = "<div style='width:100%; font-weight:900; font-size:14px; text-align:center;'>فرحتنا بدأت الآن! 🎉</div>";
+                return;
+            }
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = String(d).padStart(2, '0');
+            document.getElementById('hours').innerText = String(h).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(s).padStart(2, '0');
+        }
+
+        // تشغيل العداد وتحديثه كل ثانية واحدة بالظبط
+        liveTimer();
+        setInterval(liveTimer, 1000);
+    </script>
+</body>
+</html>
         }
 
         /* الظرف الخارجي */
