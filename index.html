@@ -3,22 +3,364 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>دعوة خطوبة فارس ووعد</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <style>
-body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#5b0015,#b3002d);color:#fff;text-align:center;padding:20px}
-.card{max-width:420px;margin:auto;background:#c00030;border:3px solid #D4AF37;border-radius:20px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
-h1{color:#D4AF37}
-.btn{display:inline-block;background:#D4AF37;color:#000;padding:10px 16px;border-radius:20px;text-decoration:none;font-weight:bold}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Cairo',sans-serif;
+height:100vh;
+overflow:hidden;
+background:
+linear-gradient(
+135deg,
+#5b0015,
+#8b001f,
+#b3002d
+);
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+}
+
+.gold-particles{
+position:absolute;
+width:100%;
+height:100%;
+overflow:hidden;
+}
+
+.gold-particles span{
+position:absolute;
+display:block;
+width:4px;
+height:4px;
+background:#D4AF37;
+border-radius:50%;
+animation:float 10s linear infinite;
+opacity:.7;
+}
+
+@keyframes float{
+0%{
+transform:translateY(100vh) scale(0);
+}
+100%{
+transform:translateY(-100px) scale(1);
+}
+}
+
+.container{
+position:relative;
+width:100%;
+max-width:420px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.envelope-wrapper{
+position:relative;
+width:330px;
+height:220px;
+background:#b00028;
+cursor:pointer;
+border-radius:0 0 14px 14px;
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+transition:.6s;
+}
+
+.envelope-flap{
+position:absolute;
+top:0;
+left:0;
+width:0;
+height:0;
+border-left:165px solid transparent;
+border-right:165px solid transparent;
+border-top:130px solid #8a001e;
+transform-origin:top;
+transition:.7s;
+z-index:5;
+}
+
+.envelope-front{
+position:absolute;
+bottom:0;
+width:0;
+height:0;
+border-left:165px solid #ff1848;
+border-right:165px solid #ff1848;
+border-bottom:110px solid #d7002d;
+border-top:110px solid transparent;
+}
+
+.seal-btn{
+position:absolute;
+top:92px;
+left:50%;
+transform:translateX(-50%);
+width:60px;
+height:60px;
+border-radius:50%;
+background:#D4AF37;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:25px;
+z-index:10;
+animation:pulse 1.4s infinite;
+color:white;
+}
+
+@keyframes pulse{
+50%{
+transform:translateX(-50%) scale(1.1);
+}
+}
+  .card{
+position:absolute;
+width:320px;
+height:500px;
+background:
+linear-gradient(
+180deg,
+#8a001e,
+#c0002a,
+#ff0033
+);
+border:3px solid #D4AF37;
+border-radius:22px;
+padding:20px;
+text-align:center;
+color:white;
+box-shadow:0 20px 60px rgba(0,0,0,.45);
+
+transform:translateY(100px) scale(.8);
+opacity:0;
+transition:.8s;
+
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.container.open .envelope-flap{
+transform:rotateX(180deg);
+}
+
+.container.open .card{
+opacity:1;
+transform:translateY(-250px) scale(1);
+}
+
+.container.open .envelope-wrapper{
+transform:translateY(140px);
+}
+
+.guest{
+color:#D4AF37;
+font-size:15px;
+font-weight:700;
+}
+
+.title{
+color:#D4AF37;
+font-size:15px;
+font-weight:700;
+}
+
+.names{
+font-size:38px;
+font-weight:900;
+text-shadow:3px 3px #600012;
+}
+
+.badge{
+background:white;
+color:#c0002a;
+padding:8px 18px;
+border-radius:25px;
+font-weight:900;
+display:inline-block;
+}
+
+.countdown{
+background:#D4AF37;
+color:#000;
+border-radius:12px;
+padding:10px;
+display:flex;
+justify-content:space-between;
+}
+
+.countdown div{
+flex:1;
+font-size:12px;
+}
+
+.countdown span{
+display:block;
+font-size:22px;
+font-weight:900;
+}
+
+.btn{
+display:inline-block;
+padding:10px 15px;
+background:white;
+color:#c0002a;
+border-radius:25px;
+text-decoration:none;
+font-weight:800;
+margin-top:8px;
+}
+
 </style>
 </head>
+
 <body>
+
+<div class="gold-particles" id="particles"></div>
+
+<div class="container" id="container">
+
 <div class="card">
-<h1>💍 دعوة خطوبة فارس & وعد</h1>
-<p>يسر الأستاذ / يسري فارس أبو الخير<br>والأستاذ / محمد يسري أبو الخير</p>
-<p>دعوتكم لمشاركتنا فرحتنا</p>
-<p><b>07 / 07 / 2026</b></p>
-<p>📍 قاعة كابتال - طلخا - المنصورة</p>
-<a class="btn" href="https://maps.google.com/?q=393V+X8V+طلخا+الدقهلية" target="_blank">موقع القاعة</a>
+
+<div id="guestName" class="guest"></div>
+
+<div class="title">
+✨ نتشرف بحضوركم ومشاركتنا فرحتنا ✨
 </div>
-</body>
-</html>
+
+<div>
+يسر الأستاذ / يسري فارس أبو الخير<br>
+والأستاذ / محمد يسري أبو الخير
+</div>
+
+<div>
+يدعونكم لحضور حفل خطوبة
+</div>
+
+<div class="names">
+فارس & وعد
+</div>
+
+<div>
+💍 ننتظر حضوركم لمشاركتنا أجمل لحظات العمر
+</div>
+
+<div class="badge">
+07 / 07 / 2026
+</div>
+
+<div>
+📍 قاعة كابتال - طلخا - المنصورة
+</div>
+
+<a
+class="btn"
+href="https://maps.google.com/?q=393V+X8V+طلخا+الدقهلية"
+target="_blank">
+📍 موقع القاعة
+</a>
+
+<div class="countdown" id="timer">
+
+<div>
+<span id="days">00</span>
+يوم
+</div>
+
+<div>
+<span id="hours">00</span>
+ساعة
+</div>
+
+<div>
+<span id="minutes">00</span>
+دقيقة
+</div>
+
+<div>
+<span id="seconds">00</span>
+ثانية
+</div>
+
+</div>
+
+</div>
+
+<div
+class="envelope-wrapper"
+onclick="openInvite()">
+
+<div class="envelope-flap"></div>
+<div class="envelope-front"></div>
+<div class="seal-btn">💌</div>
+
+</div>
+
+</div>
+
+<script>
+  <script>
+// فتح الدعوة
+function openInvite() {
+    document.getElementById("container").classList.add("open");
+
+    // كونفتي لحظة الفتح
+    confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 }
+    });
+}
+
+// إنشاء الجزيئات الذهبية
+const particlesContainer = document.getElementById("particles");
+
+for (let i = 0; i < 60; i++) {
+    const span = document.createElement("span");
+    span.style.left = Math.random() * 100 + "vw";
+    span.style.animationDuration = (5 + Math.random() * 10) + "s";
+    span.style.opacity = Math.random();
+    span.style.width = span.style.height = (2 + Math.random() * 4) + "px";
+    particlesContainer.appendChild(span);
+}
+
+// العد التنازلي
+const eventDate = new Date("2026-07-07T00:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = eventDate - now;
+
+    if (diff <= 0) return;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById("days").textContent = String(days).padStart(2, "0");
+    document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+    document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+    document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
