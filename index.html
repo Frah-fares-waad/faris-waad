@@ -1,242 +1,347 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دعوة زفاف فارس ووعد</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #ffe5ec 0%, #ffb3c1 100%);
-            font-family: 'Cairo', sans-serif;
-            overflow: hidden;
-        }
+<title>دعوة خطوبة فارس ووعد</title>
 
-        .container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        .envelope-wrapper {
-            position: relative;
-            width: 320px;
-            height: 220px;
-            background-color: #ff0033;
-            border-radius: 0 0 12px 12px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-            cursor: pointer;
-            z-index: 10;
-            transition: transform 0.5s ease;
-        }
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-        .envelope-flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 160px solid transparent;
-            border-right: 160px solid transparent;
-            border-top: 130px solid #d6002a;
-            transform-origin: top;
-            transition: transform 0.5s ease-in-out;
-            z-index: 12;
-        }
+body{
+font-family:'Cairo',sans-serif;
+height:100vh;
+overflow:hidden;
+background: linear-gradient(135deg, #5b0015, #8b001f, #b3002d);
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+}
 
-        .envelope-front {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 160px solid #ff1a4a;
-            border-right: 160px solid #ff1a4a;
-            border-bottom: 110px solid #e6002e;
-            border-top: 110px solid transparent;
-            border-radius: 0 0 12px 12px;
-            z-index: 11;
-        }
+.gold-particles{
+position:absolute;
+width:100%;
+height:100%;
+overflow:hidden;
+pointer-events: none;
+z-index: 1;
+}
 
-        .seal-btn {
-            position: absolute;
-            top: 95px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 55px;
-            height: 55px;
-            background-color: #ccff00;
-            border-radius: 50%;
-            z-index: 13;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 22px;
-            box-shadow: 0 0 15px #ccff00, 0 4px 10px rgba(0,0,0,0.3);
-            animation: bounceBtn 1.2s infinite;
-            transition: opacity 0.3s ease;
-        }
+.gold-particles span{
+position:absolute;
+display:block;
+width:4px;
+height:4px;
+background:#D4AF37;
+border-radius:50%;
+animation:float 10s linear infinite;
+opacity:.7;
+}
 
-        @keyframes bounceBtn {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.1); }
-        }
+@keyframes float{
+0%{ transform:translateY(100vh) scale(0); }
+100%{ transform:translateY(-100px) scale(1); }
+}
 
-        .card {
-            position: absolute;
-            width: 300px;
-            height: 460px;
-            background-color: #ff0033;
-            border: 4px solid #ffffff;
-            border-radius: 16px;
-            padding: 20px 15px;
-            text-align: center;
-            color: #ffffff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-            z-index: 5;
-            transform: translateY(100px) scale(0.85);
-            opacity: 0;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            pointer-events: none;
-        }
+.container{
+position:relative;
+width:100%;
+max-width:420px;
+height: 100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index: 2;
+}
 
-        .container.is-open .envelope-flap {
-            transform: rotateX(180deg);
-            z-index: 4;
-        }
+/* تنسيق الظرف الخارجي وترتيب الطبقات */
+.envelope-wrapper{
+position:relative;
+width:330px;
+height:220px;
+background:#b00028;
+cursor:pointer;
+border-radius:0 0 14px 14px;
+box-shadow:0 20px 50px rgba(0,0,0,.4);
+transition:.6s;
+z-index: 10;
+}
 
-        .container.is-open .seal-btn {
-            opacity: 0;
-            pointer-events: none;
-        }
+.envelope-flap{
+position:absolute;
+top:0;
+left:0;
+width:0;
+height:0;
+border-left:165px solid transparent;
+border-right:165px solid transparent;
+border-top:130px solid #8a001e;
+transform-origin:top;
+transition:.7s;
+z-index:12;
+}
 
-        .container.is-open .card {
-            transform: translateY(-110px) scale(1);
-            opacity: 1;
-            z-index: 20;
-            pointer-events: auto;
-        }
+.envelope-front{
+position:absolute;
+bottom:0;
+width:0;
+height:0;
+border-left:165px solid #ff1848;
+border-right:165px solid #ff1848;
+border-bottom:110px solid #d7002d;
+border-top:110px solid transparent;
+z-index: 11;
+}
 
-        .container.is-open .envelope-wrapper {
-            transform: translateY(120px);
-            pointer-events: none;
-        }
+.seal-btn{
+position:absolute;
+top:92px;
+left:50%;
+transform:translateX(-50%);
+width:60px;
+height:60px;
+border-radius:50%;
+background:#D4AF37;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:25px;
+z-index:13;
+animation:pulse 1.4s infinite;
+color:white;
+transition: opacity 0.3s ease;
+}
 
-        .glow-text { color: #ccff00; font-weight: 700; font-size: 14px; }
-        .hosts-title { font-size: 14px; font-weight: 600; line-height: 1.6; }
-        .main-invitation { font-size: 12px; opacity: 0.9; }
-        .names-glow { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 2px 3px 0px #99001a; }
-        
-        .date-badge {
-            background-color: #ffffff;
-            color: #ff0033;
-            font-weight: 900;
-            padding: 6px 18px;
-            border-radius: 20px;
-            display: inline-block;
-            margin: 5px auto;
-            font-size: 14px;
-        }
+@keyframes pulse{
+50%{ transform:translateX(-50%) scale(1.1); }
+}
 
-        .countdown-grid {
-            display: flex;
-            justify-content: space-between;
-            background-color: #ccff00;
-            color: #000000;
-            border-radius: 10px;
-            padding: 8px 4px;
-            font-weight: 700;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
+/* كارت الدعوة الملكي */
+.card{
+position:absolute;
+width:320px;
+height:500px;
+background: linear-gradient(180deg, #8a001e, #c0002a, #ff0033);
+border:3px solid #D4AF37;
+border-radius:22px;
+padding:20px;
+text-align:center;
+color:white;
+box-shadow:0 20px 60px rgba(0,0,0,.45);
+z-index: 5;
+transform:translateY(60px) scale(.8);
+opacity:0;
+transition:.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+pointer-events: none;
+}
 
-        .countdown-item { text-align: center; font-size: 11px; flex: 1; }
-        .countdown-item span { font-size: 20px; font-weight: 900; display: block; font-family: sans-serif; line-height: 1.1; }
-    </style>
+/* تأثيرات حركة الفتح المظبوطة */
+.container.open .envelope-flap{
+transform:rotateX(180deg);
+z-index: 4;
+}
+
+.container.open .seal-btn{
+opacity:0;
+pointer-events:none;
+}
+
+.container.open .card{
+opacity:1;
+transform:translateY(-100px) scale(1);
+z-index: 20;
+pointer-events: auto;
+}
+
+.container.open .envelope-wrapper{
+transform:translateY(150px);
+pointer-events: none;
+}
+
+.guest{
+color:#D4AF37;
+font-size:15px;
+font-weight:700;
+}
+
+.title{
+color:#D4AF37;
+font-size:15px;
+font-weight:700;
+}
+
+.names{
+font-size:38px;
+font-weight:900;
+text-shadow:3px 3px #600012;
+}
+
+.badge{
+background:white;
+color:#c0002a;
+padding:8px 18px;
+border-radius:25px;
+font-weight:900;
+display:inline-block;
+margin: 0 auto;
+}
+
+.countdown{
+background:#D4AF37;
+color:#000;
+border-radius:12px;
+padding:10px;
+display:flex;
+justify-content:space-between;
+}
+
+.countdown div{
+flex:1;
+font-size:12px;
+text-align: center;
+}
+
+.countdown span{
+display:block;
+font-size:22px;
+font-weight:900;
+font-family: sans-serif;
+}
+
+.btn{
+display:inline-block;
+padding:10px 15px;
+background:white;
+color:#c0002a;
+border-radius:25px;
+text-decoration:none;
+font-weight:800;
+margin-top:8px;
+box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container" id="boxContainer">
-        <div class="card">
-            <div class="glow-text">🎈 شرفونا ونورونا لتكتمل فرحتنا 🎈</div>
-            
-            <div class="hosts-title">
-                يسر الأستاذ / يسري فارس أبو الخير <br>
-                و الأستاذ / محمد يسري أبو الخير
-            </div>
-            
-            <div class="main-invitation">دعوتكم لحضور حفل زفاف</div>
-            <div class="names-glow">فارس & وعد</div>
-            <div style="font-size: 20px; color: #ccff00;">✨ ⭐ ✨</div>
-            
-            <div class="date-badge">التاريخ: 07 / 07 / 2026 م</div>
-            <div class="glow-text" style="font-size: 14px;">📍 المكان: قاعة الأفراح - المنصورة</div>
-            
-            <div class="countdown-grid" id="timerGrid">
-                <div class="countdown-item"><span id="days">00</span>يوم</div>
-                <div class="countdown-item"><span id="hours">00</span>ساعة</div>
-                <div class="countdown-item"><span id="minutes">00</span>دقيقة</div>
-                <div class="countdown-item" style="color: #ff0033;"><span id="seconds">00</span>ثانية</div>
-            </div>
+<div class="gold-particles" id="particles"></div>
+
+<div class="container" id="container">
+    <div class="card">
+        <div id="guestName" class="guest"></div>
+
+        <div class="title">
+            ✨ نتشرف بحضوركم ومشاركتنا فرحتنا ✨
         </div>
 
-        <div class="envelope-wrapper" onclick="openWeddingEnvelope()">
-            <div class="envelope-flap"></div>
-            <div class="envelope-front"></div>
-            <div class="seal-btn">✉</div>
+        <div>
+            يسر الأستاذ / يسري فارس أبو الخير<br>
+            والأستاذ / محمد يسري أبو الخير
+        </div>
+
+        <div>
+            يدعونكم لحضور حفل زفاف
+        </div>
+
+        <div class="names">
+            فارس & وعد
+        </div>
+
+        <div>
+            💍 ننتظر حضوركم لمشاركتنا أجمل لحظات العمر
+        </div>
+
+        <div class="badge">
+            07 / 07 / 2026
+        </div>
+
+        <div>
+            📍 قاعة كابتال - طلخا - المنصورة
+        </div>
+
+        <a class="btn" href="https://maps.google.com/?q=393V+X8V+طلخا+الدقهلية" target="_blank">
+            📍 موقع القاعة
+        </a>
+
+        <div class="countdown" id="timer">
+            <div><span id="days">00</span>يوم</div>
+            <div><span id="hours">00</span>ساعة</div>
+            <div><span id="minutes">00</span>دقيقة</div>
+            <div><span id="seconds">00</span>ثانية</div>
         </div>
     </div>
 
-    <script>
-        function openWeddingEnvelope() {
-            document.getElementById('boxContainer').classList.add('is-open');
-            confetti({
-                particleCount: 150,
-                spread: 80,
-                origin: { y: 0.6 }
-            });
-        }
+    <div class="envelope-wrapper" onclick="openInvite()">
+        <div class="envelope-flap"></div>
+        <div class="envelope-front"></div>
+        <div class="seal-btn">💌</div>
+    </div>
+</div>
 
-        function liveTimer() {
-            const weddingDate = new Date('July 7, 2026 00:00:00').getTime();
-            const now = new Date().getTime();
-            const diff = weddingDate - now;
+<script>
+// توليد جزيئات الذهب العشوائية
+for(let i=0; i<60; i++){
+    let star = document.createElement("span");
+    star.style.left = Math.random()*100+"%";
+    star.style.animationDuration = (5+Math.random()*8)+"s";
+    star.style.opacity = Math.random();
+    document.getElementById("particles").appendChild(star);
+}
 
-            if (diff < 0) {
-                document.getElementById('timerGrid').innerHTML = "<div style='width:100%; font-weight:900; font-size:14px; text-align:center;'>فرحتنا بدأت الآن! 🎉</div>";
-                return;
-            }
+// دالة فتح الدعوة
+function openInvite(){
+    document.getElementById("container").classList.add("open");
+    confetti({
+        particleCount: 250,
+        spread: 120,
+        origin: {y: .6}
+    });
+}
 
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
+// العداد التنازلي بالثانية
+function countdown(){
+    let target = new Date("July 7, 2026 00:00:00").getTime();
+    let now = new Date().getTime();
+    let diff = target - now;
 
-            document.getElementById('days').innerText = String(d).padStart(2, '0');
-            document.getElementById('hours').innerText = String(h).padStart(2, '0');
-            document.getElementById('minutes').innerText = String(m).padStart(2, '0');
-            document.getElementById('seconds').innerText = String(s).padStart(2, '0');
-        }
+    if(diff < 0){
+        document.getElementById("timer").innerHTML = "<div style='width:100%;font-weight:900;text-align:center;'>🎉 تمت الفرحة على خير 🎉</div>";
+        return;
+    }
 
-        liveTimer();
-        setInterval(liveTimer, 1000);
-    </script>
+    let d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    let s = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerText = String(d).padStart(2,'0');
+    document.getElementById("hours").innerText = String(h).padStart(2,'0');
+    document.getElementById("minutes").innerText = String(m).padStart(2,'0');
+    document.getElementById("seconds").innerText = String(s).padStart(2,'0');
+}
+
+countdown();
+setInterval(countdown, 1000);
+
+// ميزة اسم الضيف التلقائي من الرابط
+const params = new URLSearchParams(window.location.search);
+const guest = params.get("guest");
+if(guest){
+    document.getElementById("guestName").innerHTML = `🌹 أهلاً وسهلاً بالأستاذ ${guest} 🌹`;
+}
+</script>
+
 </body>
 </html>
