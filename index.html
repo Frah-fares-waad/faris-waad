@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة فرح فارس ووعد الأسطورية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* الخلفية العامة للموقع: مبهجة وبها حركة بسيطة */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle, #ffeaee 0%, #ffb3c1 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Cairo', sans-serif;
+            overflow: hidden;
+            perspective: 1000px; /* لعمل تأثير ثلاثي الأبعاد عند فتح الظرف */
+        }
+
+        /* حاوية الظرف */
+        .envelope-container {
+            position: relative;
+            width: 380px;
+            height: 250px;
+            background-color: #ff0033; /* أحمر مبهج ناري */
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        /* غطاء الظرف (المثلث اللي بيقفل) */
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 190px solid transparent;
+            border-right: 190px solid transparent;
+            border-top: 150px solid #d6002a; /* أحمر أغمق سنة للتجاعيد */
+            transform-origin: top;
+            transition: transform 0.6s ease, z-index 0.2s ease;
+            z-index: 3;
+        }
+
+        /* جيب الظرف السفلي */
+        .pocket {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 190px solid #ff1a4a;
+            border-right: 190px solid #ff1a4a;
+            border-bottom: 125px solid #e6002e;
+            border-top: 125px solid transparent;
+            border-radius: 0 0 15px 15px;
+            z-index: 4;
+        }
+
+        /* النقطة أو الزر الفسفوري اللي بيقفل الطرق وبيتفتح منه */
+        .seal-button {
+            position: absolute;
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 70px;
+            background-color: #ccff00; /* أصفر فسفوري منور */
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 0 20px #ccff00, 0 4px 10px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+            font-weight: 900;
+            font-size: 22px;
+            transition: all 0.3s ease;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); box-shadow: 0 0 15px #ccff00; }
+            50% { transform: translateX(-50%) scale(1.1); box-shadow: 0 0 30px #ccff00; }
+            100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 15px #ccff00; }
+        }
+
+        /* كارت الدعوة الداخلي المستخبّي */
+        .card {
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            width: 350px;
+            height: 520px;
+            background-color: #ff0033; /* خلفية حمراء مبهجة جداً */
+            border: 5px solid #ffffff; /* برواز أبيض شاهق */
+            border-radius: 12px;
+            padding: 25px 20px;
+            box-sizing: border-box;
+            text-align: center;
+            color: #ffffff; /* كلام باللون الأبيض */
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* تأثيرات الحركة السحرية عند الفتح */
+        .envelope-container.open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-container.open .card {
+            transform: translateY(-330px);
+            z-index: 5;
+        }
+
+        .envelope-container.open .seal-button {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* نصوص وأشكال الكارت المبهجة */
+        .title-top { font-size: 14px; font-weight: bold; color: #ccff00; letter-spacing: 1px; }
+        .hosts { font-size: 15px; font-weight: bold; line-height: 1.6; }
+        .wedding-for { font-size: 13px; opacity: 0.9; margin: 5px 0; }
+        .names { font-size: 32px; font-weight: 900; color: #ffffff; text-shadow: 2px 4px 0px #99001a; }
+        
+        .date-box {
+            background-color: #ffffff;
+            color: #ff0033;
+            font-weight: 900;
+            padding: 8px 15px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 10px auto;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .location { font-size: 14px; font-weight: bold; color: #ccff00; }
+
+        /* العداد التنازلي المفسفور والمبهج لـ 7/7 */
+        .countdown-timer {
+            display: flex;
+            justify-content: space-around;
+            background-color: #ccff00; /* أصفر فسفوري */
+            color: #000000; /* نص أسود واضح وقوي */
+            border-radius: 10px;
+            padding: 12px 5px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .time-section { text-align: center; font-size: 12px; flex: 1; }
+        .time-section span { font-size: 24px; font-weight: 900; display: block; font-family: monospace; }
+
+        /* زينة القصاصات المبهجة (Celebations) */
+        .decorations { font-size: 20px; color: #ccff00; }
+    </style>
+</head>
+<body>
+
+    <!-- حاوية الظرف بالكامل وعند الضغط عليها يفتح كل شيء -->
+    <div class="envelope-container" id="invitationEnvelope" onclick="toggleEnvelope()">
+        <div class="flap"></div>
+        <div class="pocket"></div>
+        
+        <!-- النقطة الفسفورية القافلة -->
+        <div class="seal-button">✉</div>
+
+        <!-- الكارت اللي بيطلع بره لما تفتح -->
+        <div class="card" onclick="event.stopPropagation();">
+            <div class="title-top">🎈 شرفونا ونورونا 🎈</div>
+            
+            <div class="hosts">
+                يسر الأستاذ / يسري فارس أبو الخير <br>
+                و الأستاذ / محمد يسري أبو الخير
+            </div>
+            
+            <div class="wedding-for">دعوتكم لحضور حفل زفاف</div>
+            <div class="names">فارس & وعد</div>
+            
+            <div class="decorations">✨ ⭐ ✨</div>
+            
+            <div class="date-box">التاريخ الأسطوري: 07 / 07 / 2026 م</div>
+            <div class="location">📍 المكان: قاعة الأفراح - المنصورة</div>
+            
+            <!-- العداد التنازلي -->
+            <div class="countdown-timer" id="countdown">
+                <div class="time-section"><span id="days">00</span>يوم</div>
+                <div class="time-section"><span id="hours">00</span>ساعة</div>
+                <div class="time-section"><span id="minutes">00</span>دقيقة</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // دالة فتح وإغلاق الظرف بالأنيميشن السلس
+        function toggleEnvelope() {
+            document.getElementById('invitationEnvelope').classList.toggle('open');
+        }
+
+        // حسابات العداد التنازلي التلقائي ليوم 7/7/2026
+        function runTimer() {
+            const weddingDate = new Date('July 7, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const difference = weddingDate - now;
+
+            if (difference < 0) {
+                document.getElementById('countdown').innerHTML = "<div style='width:100%; text-align:center; font-weight:900;'>بدأ الفرح! دامت أفراحكم 🎉</div>";
+                return;
+            }
+
+            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('days').innerText = String(d).padStart(2, '0');
+            document.getElementById('hours').innerText = String(h).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+        }
+
+        runTimer();
+        setInterval(runTimer, 60000); // تحديث كل دقيقة ليظل دقيقاً
+    </script>
+</body>
+</html>
