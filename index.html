@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>دعوة خطوبة فارس ووعد</title>
+<title>دعوة خطوبة م / فارس و د / وعد</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -183,7 +183,7 @@ font-weight:700;
 }
 
 .names{
-font-size:36px;
+font-size:32px;
 font-weight:900;
 text-shadow:3px 3px #600012;
 }
@@ -259,7 +259,7 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         </div>
 
         <div class="names">
-            فارس & وعد
+            م / فارس & د / وعد
         </div>
 
         <div style="font-size: 13px;">
@@ -303,13 +303,21 @@ for(let i=0; i<60; i++){
     document.getElementById("particles").appendChild(star);
 }
 
-// دالة فتح الدعوة
+// دالة فتح الدعوة وتشغيل الموسيقى
 function openInvite(){
     document.getElementById("container").classList.add("open");
+    
+    // تشغيل تأثير الورق الملون
     confetti({
         particleCount: 250,
         spread: 120,
         origin: {y: .6}
+    });
+
+    // تشغيل ملف الزغاريد المرفوع على جيت هاب تلقائياً عند فتح الظرف
+    let audio = new Audio('زغاريد بدون موسيقى بصوت صافي عالي الجودة(M4A_128K).m4a');
+    audio.play().catch(function(error) {
+        console.log("المتصفح حظر التشغيل التلقائي حتى يتفاعل المستخدم أولاً.");
     });
 }
 
