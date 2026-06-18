@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>دعوة خطوبة م / فارس و د / وعد</title>
+<title>دعوة خطوبة مهندس / فارس و دكتورة / وعد</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -25,6 +25,84 @@ display:flex;
 justify-content:center;
 align-items:center;
 position:relative;
+}
+
+/* شاشة إدخال الاسم قبل عرض الظرف */
+.name-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(135deg, #4a0011, #700019, #930024);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 100;
+transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.name-box {
+background: rgba(255, 255, 255, 0.04);
+border: 2px solid #D4AF37;
+padding: 35px 25px;
+border-radius: 24px;
+text-align: center;
+color: white;
+max-width: 360px;
+width: 90%;
+box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+backdrop-filter: blur(15px);
+-webkit-backdrop-filter: blur(15px);
+}
+
+.name-box h2 {
+color: #D4AF37;
+font-size: 20px;
+font-weight: 700;
+margin-bottom: 10px;
+}
+
+.name-box p {
+font-size: 14px;
+margin-bottom: 25px;
+opacity: 0.9;
+}
+
+.name-box input {
+width: 100%;
+padding: 12px 20px;
+border-radius: 25px;
+border: 1px solid #D4AF37;
+background: rgba(255, 255, 255, 0.95);
+color: #333;
+text-align: center;
+font-family: 'Cairo', sans-serif;
+font-size: 16px;
+font-weight: 600;
+margin-bottom: 20px;
+outline: none;
+box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.name-box button {
+background: linear-gradient(90deg, #D4AF37, #f3e5ab);
+color: #5b0015;
+border: none;
+padding: 10px 30px;
+border-radius: 25px;
+font-weight: 900;
+cursor: pointer;
+font-family: 'Cairo', sans-serif;
+font-size: 15px;
+transition: 0.3s ease;
+box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.name-box button:hover {
+transform: scale(1.05);
+background: white;
+color: #b3002d;
 }
 
 .gold-particles{
@@ -133,7 +211,7 @@ height:510px;
 background: linear-gradient(180deg, #8a001e, #c0002a, #ff0033);
 border:3px solid #D4AF37;
 border-radius:22px;
-padding:15px;
+padding:15px 12px;
 text-align:center;
 color:white;
 box-shadow:0 20px 60px rgba(0,0,0,.45);
@@ -183,9 +261,10 @@ font-weight:700;
 }
 
 .names{
-font-size:32px;
+font-size:26px;
 font-weight:900;
-text-shadow:3px 3px #600012;
+text-shadow:2px 2px #600012;
+line-height: 1.2;
 }
 
 .badge{
@@ -238,6 +317,16 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 
 <body>
 
+<!-- شاشة طلب الاسم أولاً -->
+<div class="name-overlay" id="nameOverlay">
+    <div class="name-box">
+        <h2>أهلاً بك في مناسبتنا السعيدة ✨</h2>
+        <p>الرجاء كتابة اسمك الكريم لتخصيص الدعوة</p>
+        <input type="text" id="nameInput" placeholder="اكتب اسمك هنا..." required>
+        <button onclick="submitName()">عرض الدعوة الملكية 💌</button>
+    </div>
+</div>
+
 <div class="gold-particles" id="particles"></div>
 
 <div class="container" id="container">
@@ -259,7 +348,9 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         </div>
 
         <div class="names">
-            م / فارس & د / وعد
+            <div>مهندس / فارس</div>
+            <div style="font-size: 22px; color: #D4AF37; margin: 2px 0;">&</div>
+            <div>دكتورة / وعد</div>
         </div>
 
         <div style="font-size: 13px;">
@@ -303,7 +394,23 @@ for(let i=0; i<60; i++){
     document.getElementById("particles").appendChild(star);
 }
 
-// دالة فتح الدعوة وتشغيل الموسيقى
+// دالة تأكيد الاسم وإخفاء شاشة القفل أولاً
+function submitName() {
+    let name = document.getElementById("nameInput").value.trim();
+    if(name === "") {
+        alert("فضلاً، أدخل اسمك الكريم أولاً لرؤية الدعوة 🌹");
+        return;
+    }
+    // تخصيص الدعوة باسم الضيف
+    document.getElementById("guestName").innerHTML = `🌹 أهلاً وسهلاً بـ ${name} 🌹`;
+    
+    // إخفاء شاشة طلب الاسم بسلاسة
+    let overlay = document.getElementById("nameOverlay");
+    overlay.style.opacity = "0";
+    overlay.style.visibility = "hidden";
+}
+
+// دالة فتح الدعوة وتشغيل الموسيقى والزغاريد
 function openInvite(){
     document.getElementById("container").classList.add("open");
     
@@ -345,13 +452,6 @@ function countdown(){
 
 countdown();
 setInterval(countdown, 1000);
-
-// ميزة اسم الضيف التلقائي من الرابط
-const params = new URLSearchParams(window.location.search);
-const guest = params.get("guest");
-if(guest){
-    document.getElementById("guestName").innerHTML = `🌹 أهلاً وسهلاً بالأستاذ ${guest} 🌹`;
-}
 </script>
 
 </body>
