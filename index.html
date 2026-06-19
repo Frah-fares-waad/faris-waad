@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>دعوة خطوبة مهندس / فارس و دكتورة / وعد</title>
+
 <meta name="description" content="يتشرف الأستاذ يسري فارس أبو الخير بدعوتكم لحضور حفل خطوبة مهندس / فارس و دكتورة / وعد">
 <meta property="og:title" content="دعوة خطوبة مهندس / فارس و دكتورة / وعد ✨">
 <meta property="og:description" content="نتشرف بحضوركم ومشاركتنا فرحتنا - قاعة كمبنسك نيو جاردن">
@@ -271,15 +272,29 @@ text-shadow:2px 2px #600012;
 line-height: 1.2;
 }
 
+/* تنسيق الـ Badge المطور ليشمل التاريخ والوقت معاً بشكل شيك */
+.badge-container {
+display: flex;
+justify-content: center;
+gap: 10px;
+width: 100%;
+max-width: 280px;
+margin: 0 auto;
+}
+
 .badge{
 background:white;
 color:#c0002a;
-padding:6px 16px;
+padding:6px 12px;
 border-radius:25px;
 font-weight:900;
-display:inline-block;
-margin: 0 auto;
-font-size: 14px;
+font-size: 13px;
+flex: 1;
+box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 4px;
 }
 
 .countdown{
@@ -351,17 +366,18 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         </div>
 
         <div class="names">
-            <div>المهندس / فارس</div>
+            <div>مهندس / فارس</div>
             <div style="font-size: 22px; color: #D4AF37; margin: 2px 0;">&</div>
-            <div>الدكتورة / وعد</div>
+            <div>دكتورة / وعد</div>
         </div>
 
         <div style="font-size: 13px;">
             💍 ننتظر حضوركم لمشاركتنا أجمل لحظات العمر
         </div>
 
-        <div class="badge">
-            07 / 07 / 2026
+        <div class="badge-container">
+            <div class="badge">📅 07 / 07 / 2026</div>
+            <div class="badge">⏱️ 09:00 مساءً</div>
         </div>
 
         <div style="font-size: 14px; font-weight: 600;">
